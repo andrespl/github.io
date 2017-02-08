@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="ISO-8859-1">
+<title>Tutorial</title>
+</head>
+<div>
+<div>Menú</div>
+<hr/>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li> <a href="tutorial.html">Tutorial</a> </li>
+<li> <a href="desarrolladores.html">Desarrolladores</a> </li>
+<li> <a href="referencia.html">Enlaces de interés</a> </li>
+</ul>
+</div>
+<body>
+    <p><h1>Tutorial: como conseguir y utilizar una imagen de Docker</h1>
+    Vamos a ver como poder conseguir cualquiera de las dos imágenes de Docker primero, ya que el proceso es igual para ambas. 
+        <ol><li> Instalar Docker</li>
+        <p> Es <b>imprescindible</b> contar con un ordenador con los requisitos para instalar Docker. En general estos son únicamente espacio suficiente para la instalación y un sistema operativo compatible. Para realizar la
+        instalación hay que seguir los pasos apropiados para el sistema operativo que se esté utilizando, es recomendable haber revisado antes <a href="https://docs.docker.com/engine/getstarted/step_one/">la página instalación de Docker </a></p>
+        <li> Obtener la imagen</li>
+        <p>Una vez se tiene Docker, hay que obtener la imagen. Para ello habrá que utilizar el comando <i>docker pull andrespl/mothur // docker pull andrespl/qiime</i> o <i>docker run -t -i andrespl/mothur // docker run -t -i andrespl/qiime</i></p>
+        <p> La primer opción solo comprobará si la imágen se encuentra en los archivos locales, y sino es así, la descargará. La segunda, además de lo que haría la primera, la ejecuta. Los comandos -t y -i son necesarios para indicarle a Docker
+        que debe abrir una nueva terminal (pseudo TTY) y permitir la entrada estándar respectivamente. Param más información sobre las posibilidades consultar <a href="https://docs.docker.com/v1.11/engine/reference/commandline/run/">aquí</a></p>
+        <li> Ejecutar los pipelines dentro de la imagen. La información de la ejecución de cada pipelines puede encontrarse en <a href="qiime.html">QIIME</a> y en <a href="mothur.html">Mothur</a></li>  
+        </ol>  
+    </p>
+    
+    
+</body>
+</html>

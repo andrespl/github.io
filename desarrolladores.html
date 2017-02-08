@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="ISO-8859-1">
+<title>Desarrolladores</title>
+</head>
+<div>
+<div>Menú</div>
+<hr/>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li> <a href="tutorial.html">Tutorial</a> </li>
+<li> <a href="desarrolladores.html">Desarrolladores</a> </li>
+<li> <a href="referencia.html">Enlaces de interés</a> </li>
+</ul>
+</div>
+<body>
+<p><h1>Información para desarrolladores</h1>
+    Los dockerfiles de las imágenes pueden encontrarse en los siguientes enlaces: <a href="https://github.com/andrespl/Mothur">Mothur</a> y <a href="https://github.com/andrespl/qiime">QIIME</a>.
+    
+    Las imágenes se han creado basándose en una imagen ya creada de Ubuntu 14.04, que puede encontrarse <a href="https://hub.docker.com/_/ubuntu/">aquí</a>. En el momento en el que comenzó este proyecto
+    esta era la imagen con mayor estabilidad de las disponibles en Docker Hub. Con el paso del tiempo parece que la imagen de Ubuntu 16.04 tiene tanto o más éxito que la de 14.04, por lo que en un futuro será interesante
+    cambiar la imagen de base.
+    
+    A la hora de añadir todos los elemento se ha optado por copiarlos directamente, en los enlaces anteriores, si no se encuentra en el propio repositorio de GitHub, se encuentran los enlaces a los distintos elementos necesarios
+    para montar la imagen correctamente. Se ha evitado hacer que el dockerfile sea el propio encargadao de descargar cualquier elemento para evitar en la medida de lo posible dependencias externas, en caso de que los repositorios
+    en los que esté alojado el material no se encuentren disponibles, o eliminen las verisiones que se utilizan. 
+</p>
+<p><h2>Versiones</h2></p>
+<p>Para la imagen de QIIME se han utilizado las siguientes versiones:
+    <ol>
+        <li>Miniconda2 4.0.5</li>
+        <li>QIIME 1.9.1</li>
+    </ol>
+    En el caso de Miniconda, podría haberse utilizado Miniconda3 y al crear el entorno de QIIME indicar que se basa en Python 2.7, pero debido a que la imagen de base necesitaba muchas más librerias para poder funcionar
+    correctamente con Miniconda3, se optó por utilizar Miniconda2. Con la versión de QIIME instalada no existe ninguna incompatibilidad, aunque en futuras versiones si que puede que sea necesario actualizar Miniconda también 
+</p>
+
+<p>Para la imagen de Mothur se han utilizado las siguientes versiones:
+ <ol>
+    <li>Mothur 1.36.1</li>
+ </ol>
+    La imagen de Mothur necesita algo de preparación previa. Debido a que los datos son demasiado extensos, GitHub no permite subirlos al repositorio, por lo que en el propio repositorio se encuentra la dirección de descarga
+    de estos, así como la de la versión de Mothur utilizada, que también es necesario descargar. Se recomienda usar esta versión ya que es para la que se ha testeado la imagen. Es necesario que tanto la carpeta data como la carpeta
+    de mothur estén en el mismo directorio que el dockerfile a la hora de construir la imagen, salvo que se proporcione en el propio dockerfile la ruta hasta estos archivos.
+</p>   
+</body>
+</html>

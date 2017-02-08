@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="ISO-8859-1">
+<title>Tutorial</title>
+</head>
+<div>
+<div>Menú</div>
+<hr/>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li> <a href="tutorial.html">Tutorial</a> </li>
+<li> <a href="desarrolladores.html">Desarrolladores</a> </li>
+<li> <a href="referencia.html">Enlaces de interés</a> </li>
+</ul>
+</div>
+<body>
+<p><h2>Ejecutar y correr pipeline de la imagen de QIIME</h2>
+    Para ejecutar QIIME primero hay que activar el entorno, para ello, en la línea de comandos del terminal debe escribirse: <i>source activate qiime1</i>. Una vez activo, puede manejarse igual que se manejarse como
+se manejaría el terminal. Para realizar el análisis que se propone en el tutorial, los pasos a seguir son:
+<ol>
+    <li>Validar el archivo de mapeo. Este archivo contiene toda la información necesaria para llevar a cabo el análisis, por ello es fundamental asegurarse de que tenga el formato correcto.
+    Utilizando <i>validate_mapping_file.py -m Fasting_Map.txt -o mapping_output</i> se consigue. Si aparece algún error este se escribirá en un fichero html. </li>
+    <li>El siguiente paso es asignar lecturas multiplexed a muestras basándose en el “código de barras”. Este paso además realiza un filtro de calidad basado en las características de cada secuencia, eliminando cualquiera
+    de baja calidad o lecturas ambiguas. Se utiliza el siguiente código: <i>split_libraries.py -m Fasting_Map.txt -f Fasting_Example.fna -q Fasting_Example.qual -o split_library_output.</i></li>
+    <li>Utilizando uno de los output del paso anterior, seqs.fna, se ejecuta la línea: <i>pick_de_novo_otus.py -i split_library_output/seqs.fna -o otus.</i></li>
+    <li>Un sumario de los contenidos de la tabla OTU pueden observarse usando el comando: <i>biom summarize-table -i otus/otu_table.biom</i></li>
+</ol>    
+</p>   
+
+Puede encontrarse más información sobre el la ejecución del tutorial en su <a href="http://qiime.org/tutorials/tutorial.html">web</a>    
+</body>
+</html>

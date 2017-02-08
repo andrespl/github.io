@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="ISO-8859-1">
+<title>Enlaces de interés</title>
+</head>
+<div>
+<div>Menú</div>
+<hr/>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li> <a href="tutorial.html">Tutorial</a> </li>
+<li> <a href="desarrolladores.html">Desarrolladores</a> </li>
+<li> <a href="referencia.html">Enlaces de interés</a> </li>
+</ul>
+</div>
+<body>
+<p><h2>Ejecutar y correr pipeline de la imagen de Mothur</h2>
+    Los datos de los que se parte en la imagen de Mothur han sido previamente reducidos y procesados, ya que los ficheros originales tenían un tamaño de aproximadamente 800Mb, en total,
+hay 21 de los 96 archivos que se obtenían tras el primer procesamiento. Los pasos que se siguen son:
+<ol>
+    <li>Reducir error de secuenciación: el primer paso que se realiza es eliminar secuencias de primers, se comprueba que todas la secuencias tienen una longitud de 200pb,
+    y se eliman las secuencias con homopolímeros de más de 8pb, todo ello con la función trim.seqs,
+    cuyo código es: <i>mothur > trim.seqs(fasta=GQY1XT001.shhh.fasta, name=GQY1XT001.shhh.names, oligos=GQY1XT001.oligos, pdiffs=2, bdiffs=1, maxhomop=8, minlength=200, flip=T, processors=2). </i></li>
+    <li>Procesamiento de las secuencias mejoradas
+        <ol> <li>Primero se filtran las secuencias utilizando unique.seqs, que selecciona solo las secuencias únicas, aliviando enormemente la carga computacional. El comando utilizado será:
+        <i>mothur > unique.seqs(fasta=GQY1XT001.shhh.trim.fasta, name=GQY1XT001.shhh.trim.names)</i></li>
+        <li>El siguiente paso es alinear las secuencias filtradas frente a un genoma de referencia: <i>mothur > align.seqs(fasta=GQY1XT001.shhh.trim.unique.fasta, reference=silva.bacteria.fasta, processors=2)</i></li>
+        <li>Puesto que algunas secuencias se alinearon en zonas que no resultan deseables, se eliminan utilizando: <i>mothur > screen.seqs(fasta=GQY1XT001.shhh.trim.unique.align,
+        name=GQY1XT001.shhh.trim.unique.names, group=GQY1XT001.shhh.groups, end=27659, optimize=start, criteria=95, processors=2)</i></li>
+        <li>Puesto que hay zonas del alineamiento que no contienen información, o regiones en las que varias secuencias han alineado solapándose, con lo que no aportan información nueva,
+        se eliminan estas para reducir la carga. Todas las columnas que no tengan información o que se solapen se eliminan utilizando:
+        <i>mothur > filter.seqs(fasta=GQY1XT001.shhh.trim.unique.good.align, vertical=T, trump=., processors=2)</i>.
+        Para eliminar las secuencias redundantes que puedan haber surgido se utiliza de nuevo la función unique.seqs: <i>mothur > unique.seqs(fasta=GQY1XT001.shhh.trim.unique.good.filter.fasta, name=GQY1XT001.shhh.trim.unique.good.names)</i></li>
+        <li>El último procesamiento de esta parte consiste en  separar las secuencias en grupos y “pre-agrupar” las secuencias que se distingan una o dos bases de otra más  abundante. Para esto se utiliza la función pre-cluster:
+        <i>mothur > pre.cluster(fasta=GQY1XT001.shhh.trim.unique.good.filter.unique.fasta, name=GQY1XT001.shhh.trim.unique.good.filter.names, group=GQY1XT001.shhh.good.groups, diffs=2)</i></li>
+        
+    </ol></li>
+    <li>Eliminación de quimeras: las quimeras son fragmentos de DNA procedentes de la mezcla de varios padres. Para eliminarlas se siguen dos pasos, primero se detectan utilizando la función chimera.uchime:
+    <i>mothur > chimera.uchime(fasta=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.fasta, name=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.names, group=GQY1XT001.shhh.good.groups, processors=2)</i>.
+    Una vez se han detectado, se eliminan: <i>mothur > remove.seqs(accnos=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.denovo.uchime.accnos,
+    fasta=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.fasta, name=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.names, group=GQY1XT001.shhh.good.groups, dups=T)</i></li>
+    <li> Eliminar “contaminantes”: puesto que algunas organelas eucarióticas (cloroplastos y mitocondrias) están asociadas con las bacterias, se eliminan las secuencias que se consideran asociadas.
+    Utilizando la versión de mothur de un clasificador bayesiano, mediante la función classify.seqs:
+    <i>mothur > classify.seqs(fasta=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.pick.fasta, name=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.pick.names, group=GQY1XT001.shhh.good.pick.groups, template=trainset9_032012.pds.fasta, taxonomy=trainset9_032012.pds.tax, cutoff=80, processors=2)</i></li>
+    <li>Antes de pasar a los OTUs, se preparan los datos, se elimina un grupo de secuencias, que se usaron a modo de broma:
+    <i>mothur > remove.groups(fasta=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.pick.pick.fasta, group=GQY1XT001.shhh.good.pick.pick.groups, name=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.pick.pick.names, taxonomy=GQY1XT001.shhh.trim.unique.good.filter.unique.precluster.pick.pds.wang.pick.taxonomy, groups=MOCK.GQY1XT001)</i> </li>
+    <li>Para acabar, se construyen los OTUs, aunque hay varias maneras, se utiliza solo la siguiente. Primero se crea una matriz de distancias, que cortará aquellos cuya distancia entre pares de bases sea mayor que 0.15
+    (indicado por el parámetro cutoff): <i>mothur > dist.seqs(fasta=final.fasta, cutoff=0.15, processors=2)</i>
+
+Con la nueva matriz de distancias que se crea, se agrupan los OTUs usando cluster: mothur > cluster(column=final.dist, name=final.names)
+
+Para mejorar los datos de OTU, se normaliza el número de secuencias por muestra, para ello, usando mothur > count.groups() se ve que muestra tiene el menor número de secuencias y cuantas son
+(4419 en este caso), sabiéndolo se recortan los demás grupos usando: <i>mothur > sub.sample(shared=final.an.shared, size=4419)</i>.
+
+El último paso es conseguir la información de taxonomía de cada uno de los OTUs: <i>mothur > classify.otu(list=final.an.list, name=final.names, taxonomy=final.taxonomy, label=0.03)</i>
+</li>
+</ol>
+</p>
+
+
+</body>
+</html>
