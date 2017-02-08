@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="ISO-8859-1">
+<title>Presentación del proyecto</title>
+</head>
+<div>
+<div>Menú</div>
+<hr/>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li> <a href="tutorial.html">Tutorial</a> </li>
+<li> <a href="desarrolladores.html">Desarrolladores</a> </li>
+<li> <a href="referencia.html">Enlaces de interés</a> </li>
+</ul>
+</div>
+<body>
+    <p><H1>Introducción</H1>
+    Este proyecto corresponde al Trabajo Final de Máster de Andrés Puente López. El proyecto consiste en la creación de dos imágenes de Docker para pipelines de metagenómica, estas imágenes contienen lo siguiente:
+        <OL>
+            <li>Un pipeline (Mothur o QIIME) de metagenómica, con las dependencias y paquetes necesarios para ser ejecutado.</li>
+            <li>Un dataset de prueba </li>
+        </OL>
+    </p>
+    <p> <h2> Imagen de Qiime</h2>
+    Esta imagen contiene el pipeline QIIME (<i> quantitative insights into microbial ecology</i>). Este es un <i>software</i> abierto creado usando <i>PyCogent toolkit</i> para solucionar problemas relacionados con la toma de datos crudos de secuencias.
+    QIIME permite un amplio espectro de análisis de comunidades microbianas y visualizaciones, que han sido fundamentales para estudios recientes, incluyendo análisis de redes, histogramas de diversidad en muestras y análisis donde
+    se comprueba si un cierto grupo central de organismos está representado de forma significativa en ciertos hábitats.
+    </p>
+    
+    <p>
+        El dataset incluido corresponde a uno de los tutoriales que los desarrolladores de QIIME ofrecen, en este caso para realizar <i> de novo OTU picking</i> y diversos análisis para un amplicon 16S. Estos datos provienen de un estudio
+        realizado por <a href="https://www.ncbi.nlm.nih.gov/pubmed/19549860">Crawford et al. (2009)</a>. Para facilitar el uso y aligerar la carga computacional se ha usado un subset de 5 animales alimentados y 4 en ayunas.
+        Para más información consultar <a href="http://qiime.org/tutorials/tutorial.html">la página de referencia</a>
+    </p>
+    
+    <p> <h2> Imagen de Mothur</h2>
+    Esta imagen contiene el pipeline Mothur. Este se enfoca en ser un software exhaustivo que permita a los usuarios utilizar un solo software para realizar análisis de secuencias de comunidades. Está basado en herramientas
+    previas para ofrecer un software poderoso y flexible para el análisis de secuencias
+    </p>
+    
+    <p>
+        La información sobre el dataset puede encontrarse <a href="https://mothur.org/wiki/454_SOP">aquí</a>.
+    </p>
+    
+</body>
+</html>
